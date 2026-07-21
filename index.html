@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>MNPG Document</title>
+  style.css
+
+  <!-- Markdown Parser -->
+  https://cdn.jsdelivr.net/npm/marked/marked.min.jsscript>
+
+  <!-- HTML Sanitizer -->
+  https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.jsscript>
+</head>
+<body>
+  <div class="layout">
+
+    <aside class="sidebar">
+      <h2>MNPG Document</h2>
+
+      <button onclick="loadMarkdown('docs/index.md')">
+        Home
+      </button>
+
+      <h3>Campaign</h3>
+      <button onclick="loadMarkdown('docs/campaign/01_campaign-file-processing.md')">
+        01 Campaign File Processing
+      </button>
+      <button onclick="loadMarkdown('docs/campaign/02_transfer-campaign-to-safesmart.md')">
+        02 Transfer Campaign To SafeSmart
+      </button>
+      <button onclick="loadMarkdown('docs/campaign/03_WUWSMLPRM.md')">
+        03 WUWSMLPRM
+      </button>
+
+      <h3>SafeSmart</h3>
+      <button onclick="loadMarkdown('docs/safesmart/01_safesmart-overview.md')">
+        01 SafeSmart Overview
+      </button>
+      <button onclick="loadMarkdown('docs/safesmart/02_safesmart-validation.md')">
+        02 SafeSmart Validation
+      </button>
+      <button onclick="loadMarkdown('docs/safesmart/03_safesmart-log-spec.md')">
+        03 SafeSmart Log Spec
+      </button>
+      <button onclick="loadMarkdown('docs/safesmart/04_safesmart-api-flow.md')">
+        04 SafeSmart API Flow
+      </button>
+
+      <h3>API</h3>
+      <button onclick="loadMarkdown('docs/api/01_premium-api.md')">
+        01 Premium API
+      </button>
+      <button onclick="loadMarkdown('docs/api/02_safesmart-api.md')">
+        02 SafeSmart API
+      </button>
+      <button onclick="loadMarkdown('docs/api/03_qmod-api.md')">
+        03 QMOD API
+      </button>
+    </aside>
+
+    <main class="content">
+      <div id="markdown-content">
+        Loading...
+      </div>
+    </main>
+
+  </div>
+
+  app.jsscript>
+</body>
+</html>
