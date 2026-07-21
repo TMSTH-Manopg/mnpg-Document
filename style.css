@@ -97,3 +97,21 @@ body {
 #markdown-content th {
   background: #e5e7eb;
 }
+
+.mermaid {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+  overflow-x: auto;
+  text-align: center;
+}
+
+#markdown-content pre {
+  background: #111827;
+  color: #f9fafb;
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
