@@ -1,4 +1,4 @@
-# MNPG Document
+# TMSTH Prem Document
 
 ยินดีต้อนรับสู่ระบบเอกสารกลางของ Repository `mnpg-Document`
 ## วิธีใช้งาน
