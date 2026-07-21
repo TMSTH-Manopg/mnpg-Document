@@ -4,18 +4,12 @@
 
 ## หมวดเอกสาร
 
-### Campaign
+### SmileyQuotePremium
 
-- Campaign File Processing
-- Transfer Campaign To SafeSmart
+- 00_SmileyMain
+- 01_WUWSMLCAM
 - 03_WUWSMLPRM
-
-### SafeSmart
-
-- SafeSmart Overview
-- SafeSmart Validation
-- SafeSmart Log Specification
-- SafeSmart API Flow
+- 04_WUWSMLRES
 
 ### API
 
