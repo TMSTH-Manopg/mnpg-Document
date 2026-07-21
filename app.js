@@ -2,7 +2,7 @@ async function loadMarkdown(filePath) {
   const contentElement = document.getElementById("markdown-content");
 
   try {
-    contentElement.innerHTML = "<p>Loading document...</p>";
+    contentElement.innerHTML = "<p>Loading...</p>";
 
     const response = await fetch(filePath);
 
