@@ -1,2 +1,4 @@
-theme: jekyll-theme-cayman
-title: เอกสารของฉัน
+title: My Markdown Docs
+description: Documentation website
+theme: minima
+markdown: GFM
