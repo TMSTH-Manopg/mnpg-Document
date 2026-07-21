@@ -24,10 +24,9 @@ body {
 }
 
 .sidebar h3 {
+  color: #93c5fd;
   margin-top: 24px;
   margin-bottom: 10px;
-  color: #93c5fd;
-  font-size: 15px;
   border-bottom: 1px solid #374151;
   padding-bottom: 6px;
 }
@@ -75,20 +74,12 @@ body {
   margin-top: 28px;
 }
 
-#markdown-content h3 {
-  color: #2563eb;
-}
-
 #markdown-content pre {
   background: #111827;
   color: #f9fafb;
   padding: 16px;
   border-radius: 8px;
   overflow-x: auto;
-}
-
-#markdown-content code {
-  font-family: Consolas, Monaco, monospace;
 }
 
 #markdown-content table {
