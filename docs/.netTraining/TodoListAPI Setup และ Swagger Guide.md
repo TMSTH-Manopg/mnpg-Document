@@ -342,46 +342,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the Controllder.
 builder.Services.AddControllers();
 
-/*-  Add Service Connection Database
-builder.Services.AddDbContext<TodoListContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-);  -*/
-
-/*- Add Service interface   Injection
-builder.Services.AddScoped<ITodoService, TodoService>();
-builder.Services.AddScoped<ITodoLineService, TodoLineService>();
-
-//Repositories Injection
-builder.Services.AddScoped<ITodoRepo, TodoRepo>(); -*/
-
-
+//Add Endpoint & SwaggerGen
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("ProjectCors",
-        builder => builder
-         .SetIsOriginAllowedToAllowWildcardSubdomains()
-         .AllowAnyMethod()
-         .AllowAnyHeader()
-         .AllowCredentials()
-         .WithExposedHeaders("Content-Disposition")
-         );
-    options.AddPolicy("AllowAngular",
-    policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
-});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
-{
+{   /* Usse SwaggerUI */
     app.UseSwagger();
     app.UseSwaggerUI();
 }
@@ -393,6 +362,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
 
 ```
 
