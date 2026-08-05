@@ -4,26 +4,6 @@
 
 ---
 
-## สารบัญ
-
-1. [ภาพรวมระบบ](#1-ภาพรวมระบบ)
-2. [สิ่งที่ต้องติดตั้งก่อนเริ่มต้น](#2-สิ่งที่ต้องติดตั้งก่อนเริ่มต้น)
-3. [สร้างโปรเจกต์ TodoListAPI](#3-สร้างโปรเจกต์-todolistapi)
-4. [ทำความเข้าใจโครงสร้างโปรเจกต์](#4-ทำความเข้าใจโครงสร้างโปรเจกต์)
-5. [ติดตั้ง NuGet Packages](#5-ติดตั้ง-nuget-packages)
-6. [ติดตั้งและตั้งค่า Swagger](#6-ติดตั้งและตั้งค่า-swagger)
-7. [ตั้งค่าการเชื่อมต่อ SQL Server](#7-ตั้งค่าการเชื่อมต่อ-sql-server)
-8. [สร้าง Entity และ DbContext จากฐานข้อมูล](#8-สร้าง-entity-และ-dbcontext-จากฐานข้อมูล)
-9. [ลงทะเบียน DbContext ใน Program.cs](#9-ลงทะเบียน-dbcontext-ใน-programcs)
-10. [สร้าง Controller ตัวอย่าง](#10-สร้าง-controller-ตัวอย่าง)
-11. [Build, Debug และ Run](#11-build-debug-และ-run)
-12. [ทดสอบ API ผ่าน Swagger UI](#12-ทดสอบ-api-ผ่าน-swagger-ui)
-13. [ข้อผิดพลาดที่พบบ่อย](#13-ข้อผิดพลาดที่พบบ่อย)
-14. [แนวทางความปลอดภัยและ Best Practices](#14-แนวทางความปลอดภัยและ-best-practices)
-15. [Checklist](#15-checklist)
-
----
-
 ## 1. ภาพรวมระบบ
 
 ตัวอย่างนี้ใช้แนวทาง **Database First** หมายถึงมีฐานข้อมูลและตารางใน SQL Server อยู่ก่อน แล้วใช้ EF Core สร้างคลาส Entity และ `DbContext` จากโครงสร้างฐานข้อมูล
@@ -124,33 +104,10 @@ dotnet --version
 
 ---
 
-## 4. ทำความเข้าใจโครงสร้างโปรเจกต์
 
-```text
-TodoListAPI/
-├── Controllers/              # API Controllers
-├── Models/
-│   └── Entities/             # Entity และ DbContext ที่ Scaffold
-├── Properties/
-│   └── launchSettings.json   # URL และ Environment ตอน Run
-├── appsettings.json          # Configuration หลัก
-├── appsettings.Development.json
-├── Program.cs                # Register Services และ Middleware
-└── TodoListAPI.csproj        # Framework และ Package References
-```
+## 4. ติดตั้ง NuGet Packages
 
-หน้าที่สำคัญ:
-
-- `Program.cs` เป็นจุดเริ่มต้นของแอปพลิเคชัน
-- `appsettings.json` เก็บ Configuration เช่น Connection String
-- `Controllers` รับ HTTP Request และส่ง HTTP Response
-- `Models/Entities` เก็บคลาสที่ Mapping กับตารางฐานข้อมูล
-
----
-
-## 5. ติดตั้ง NuGet Packages
-
-### 5.1 เปิด NuGet Package Manager
+### 4.1 เปิด NuGet Package Manager
 
 วิธีผ่านหน้าจอ:
 
@@ -172,7 +129,7 @@ Package ที่ต้องติดตั้ง:
 
 > Package กลุ่ม `Microsoft.EntityFrameworkCore.*` ควรใช้เวอร์ชันเดียวกันทั้งหมด และควรเข้ากันได้กับ Target Framework ของโปรเจกต์
 
-### 5.2 ติดตั้งผ่าน Package Manager Console
+### 4.2 ติดตั้งผ่าน Package Manager Console
 
 ไปที่เมนู **Tools > NuGet Package Manager > Package Manager Console** แล้วตรวจสอบว่า `Default project` เป็น `TodoListAPI`
 
@@ -189,7 +146,7 @@ Install-Package Swashbuckle.AspNetCore
 Install-Package Microsoft.EntityFrameworkCore.SqlServer -Version 8.0.19
 ```
 
-### 5.3 ตรวจสอบ Package ที่ติดตั้งแล้ว
+### 4.3 ตรวจสอบ Package ที่ติดตั้งแล้ว
 
 ดูที่:
 
@@ -207,11 +164,11 @@ dotnet list package
 
 ---
 
-## 6. ติดตั้งและตั้งค่า Swagger
+## 5. ติดตั้งและตั้งค่า Swagger
 
 Swagger ช่วยให้ผู้พัฒนาเห็นรายการ Endpoint, Parameter, Request Body, Response และทดลองเรียก API ได้จาก Browser
 
-### 6.1 เพิ่ม Swagger Services
+### 5.1 เพิ่ม Swagger Services
 
 เปิด `Program.cs` และเพิ่ม:
 
@@ -223,7 +180,7 @@ builder.Services.AddSwaggerGen();
 - `AddEndpointsApiExplorer()` ทำให้ระบบค้นพบ Endpoint เพื่อสร้าง API description
 - `AddSwaggerGen()` สร้างเอกสาร OpenAPI
 
-### 6.2 เปิด Swagger Middleware และ Swagger UI
+### 5.2 เปิด Swagger Middleware และ Swagger UI
 
 เพิ่มหลัง `var app = builder.Build();`
 
@@ -237,7 +194,7 @@ if (app.Environment.IsDevelopment())
 
 Swagger จะแสดงเฉพาะ Development เพื่อไม่เปิดหน้าเอกสาร API ใน Production โดยไม่ตั้งใจ
 
-### 6.3 ตัวอย่าง Program.cs ฉบับเริ่มต้น
+### 5.3 ตัวอย่าง Program.cs ฉบับเริ่มต้น
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
@@ -263,7 +220,7 @@ app.MapControllers();
 app.Run();
 ```
 
-### 6.4 เปิด Swagger อัตโนมัติเมื่อ Run
+### 5.4 เปิด Swagger อัตโนมัติเมื่อ Run
 
 เปิด `Properties/launchSettings.json` และกำหนด:
 
@@ -288,9 +245,9 @@ Port จริงอาจต่างจากตัวอย่าง ให�
 
 ---
 
-## 7. ตั้งค่าการเชื่อมต่อ SQL Server
+## 6. ตั้งค่าการเชื่อมต่อ SQL Server
 
-### 7.1 สร้างฐานข้อมูลตัวอย่าง
+### 6.1 สร้างฐานข้อมูลตัวอย่าง
 
 ตัวอย่าง SQL สำหรับสร้างฐานข้อมูลและตาราง:
 
@@ -312,7 +269,7 @@ CREATE TABLE Todos
 GO
 ```
 
-### 7.2 เพิ่ม Connection String ใน appsettings.json
+### 6.2 เพิ่ม Connection String ใน appsettings.json
 
 สำหรับ Windows Authentication:
 
@@ -349,9 +306,9 @@ Server=YOUR_SERVER;Database=TodoListDB;User Id=YOUR_USER;Password=YOUR_PASSWORD;
 
 ---
 
-## 8. สร้าง Entity และ DbContext จากฐานข้อมูล
+## 7. สร้าง Entity และ DbContext จากฐานข้อมูล
 
-### 8.1 Database First คืออะไร
+### 7.1 Database First คืออะไร
 
 `Scaffold-DbContext` จะอ่าน Schema จาก SQL Server แล้วสร้าง:
 
@@ -360,15 +317,14 @@ Server=YOUR_SERVER;Database=TodoListDB;User Id=YOUR_USER;Password=YOUR_PASSWORD;
 - Primary Key และ Relationship
 - คลาส `DbContext` สำหรับ Query และบันทึกข้อมูล
 
-### 8.2 รันคำสั่ง Scaffold ใน Package Manager Console
+### 7.2 รันคำสั่ง Scaffold ใน Package Manager Console
 
 เปิด **Tools > NuGet Package Manager > Package Manager Console** และเลือก Default project เป็น `TodoListAPI`
 
 คำสั่งแนะนำ:
 
 ```powershell
-Scaffold -DbContext -f "Server=xxx;Database=xxx;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entitie\todoList
-
+Scaffold-DbContext "Server=YOUR_SERVER;Database=TodoListDB;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models\Entities -Context TodoListDbContext -ContextDir Models\Entities -NoOnConfiguring -Force
 ```
 
 ความหมายของ Parameter:
@@ -385,11 +341,10 @@ Scaffold -DbContext -f "Server=xxx;Database=xxx;Trusted_Connection=True;TrustSer
 
 > ใน Package Manager Console ใช้ `-Force` หรือชื่อย่อ `-f` ได้ แต่ `-Force` อ่านง่ายกว่า และควรวางไว้ท้ายคำสั่ง ไม่ใส่ก่อน Connection String
 
-### 8.3 Scaffold เฉพาะบางตาราง
+### 7.3 Scaffold เฉพาะบางตาราง
 
 ```powershell
-Scaffold -DbContext -f "Server=xxx;Database=xxx;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entitie\todoList
-
+Scaffold-DbContext "Server=YOUR_SERVER;Database=TodoListDB;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models\Entities -Context TodoListDbContext -NoOnConfiguring -Tables Todos -Force
 ```
 
 หลายตาราง:
@@ -398,7 +353,7 @@ Scaffold -DbContext -f "Server=xxx;Database=xxx;Trusted_Connection=True;TrustSer
 -Tables Todos,TodoCategories,Users
 ```
 
-### 8.4 ตรวจสอบผลลัพธ์
+### 7.4 ตรวจสอบผลลัพธ์
 
 ควรได้โครงสร้างคล้าย:
 
@@ -422,7 +377,7 @@ public partial class Todo
 }
 ```
 
-### 8.5 ข้อควรระวังเมื่อ Scaffold ใหม่
+### 7.5 ข้อควรระวังเมื่อ Scaffold ใหม่
 
 - `-Force` จะเขียนทับไฟล์ที่ Scaffold เคยสร้าง
 - ไม่ควรเขียน Business Logic ลงในไฟล์ Generated โดยตรง
@@ -431,7 +386,7 @@ public partial class Todo
 
 ---
 
-## 9. ลงทะเบียน DbContext ใน Program.cs
+## 8. ลงทะเบียน DbContext ใน Program.cs
 
 เพิ่ม Namespaces ด้านบนของไฟล์:
 
@@ -481,7 +436,7 @@ app.Run();
 
 ---
 
-## 10. สร้าง Controller ตัวอย่าง
+## 9. สร้าง Controller ตัวอย่าง
 
 สร้างไฟล์ `Controllers/TodosController.cs`:
 
@@ -590,9 +545,9 @@ Endpoint ที่ได้:
 
 ---
 
-## 11. Build, Debug และ Run
+## 10. Build, Debug และ Run
 
-### 11.1 Build Solution
+### 10.1 Build Solution
 
 ใช้เมนู:
 
@@ -627,7 +582,7 @@ dotnet restore
 dotnet build
 ```
 
-### 11.2 Run แบบ Debug
+### 10.2 Run แบบ Debug
 
 กด:
 
@@ -659,7 +614,7 @@ F5
 - **Call Stack** ดูลำดับ Method ที่ถูกเรียก
 - **Exception Settings** ตั้งให้หยุดเมื่อเกิด Exception
 
-### 11.3 Run โดยไม่ Debug
+### 10.3 Run โดยไม่ Debug
 
 กด:
 
@@ -669,7 +624,7 @@ Ctrl + F5
 
 เหมาะสำหรับทดสอบการทำงานทั่วไป และมักเริ่มได้เร็วกว่า Debug
 
-### 11.4 Run ด้วย .NET CLI
+### 10.4 Run ด้วย .NET CLI
 
 เปิด Terminal ที่โฟลเดอร์โปรเจกต์:
 
@@ -683,7 +638,7 @@ Run และเฝ้าดูการเปลี่ยนแปลงไฟ�
 dotnet watch run
 ```
 
-### 11.5 เลือก Startup Project
+### 10.5 เลือก Startup Project
 
 หาก Solution มีหลาย Project:
 
@@ -693,7 +648,7 @@ dotnet watch run
 
 ---
 
-## 12. ทดสอบ API ผ่าน Swagger UI
+## 11. ทดสอบ API ผ่าน Swagger UI
 
 เมื่อ Run สำเร็จ Browser ควรเปิด URL คล้าย:
 
@@ -732,6 +687,553 @@ Status Code ที่ควรรู้:
 
 ---
 
+## 12. ทำความเข้าใจโครงสร้างโปรเจกต์แบบ MVC และ Layered Architecture
+
+โปรเจกต์ในภาพเป็น **ASP.NET Core Web API** ที่ประยุกต์แนวคิด MVC ร่วมกับ **Service Layer** และ **Repository Pattern** เพื่อแยกหน้าที่ของแต่ละส่วนให้ชัดเจน ดูแลรักษาง่าย และเหมาะกับการขยายระบบในอนาคต
+
+> Web API จะใช้ส่วน **Controller** และ **Model** เป็นหลัก ส่วน **View** มักไม่มี เพราะ API ส่งข้อมูลกลับเป็น JSON ให้ Swagger, Web Application, Mobile Application หรือระบบอื่นนำไปใช้งาน
+
+### 12.1 โครงสร้างโฟลเดอร์ตามภาพ
+
+```text
+TodoListAPI/
+├── Controllers/
+│   └── TodoController.cs
+│
+├── Entitie/
+│   └── todoList/
+│       ├── Todo.cs
+│       ├── TodoListContext.cs
+│       └── todoListContext.txt
+│
+├── Models/
+│   ├── LineConfigSetting.cs
+│   ├── LineSendMessageRequest.cs
+│   └── SaveRequest.cs
+│
+├── Repository/
+│   ├── Interface/
+│   │   └── ITodoRepo.cs
+│   └── TodoRepo.cs
+│
+├── Service/
+│   ├── Interface/
+│   │   ├── ITodoLineService.cs
+│   │   └── ITodoService.cs
+│   ├── ApiLine.cs
+│   ├── TodoLineService.cs
+│   └── TodoService.cs
+│
+├── Properties/
+│   └── launchSettings.json
+├── appsettings.json
+├── appsettings.Development.json
+├── Program.cs
+└── TodoListAPI.csproj
+```
+
+### 12.2 ภาพรวมหน้าที่ของแต่ละ Layer
+
+```mermaid
+flowchart TD
+    A[Client / Swagger UI] --> B[TodoController]
+    B --> C[ITodoService]
+    C --> D[TodoService]
+    D --> E[ITodoRepo]
+    E --> F[TodoRepo]
+    F --> G[TodoListContext]
+    G --> H[(SQL Server)]
+    D --> I[ITodoLineService]
+    I --> J[TodoLineService]
+    J --> K[ApiLine]
+    K --> L[LINE API]
+```
+
+ลำดับการทำงานโดยทั่วไป:
+
+1. Client หรือ Swagger UI ส่ง HTTP Request มาที่ `TodoController`
+2. Controller ตรวจสอบข้อมูลเบื้องต้นและเรียก `ITodoService`
+3. `TodoService` ประมวลผล Business Logic
+4. หากต้องอ่านหรือบันทึกข้อมูล `TodoService` จะเรียก `ITodoRepo`
+5. `TodoRepo` ใช้ `TodoListContext` ติดต่อ SQL Server
+6. หากต้องส่ง LINE Message ระบบจะเรียก `ITodoLineService`
+7. ผลลัพธ์จะถูกส่งย้อนกลับไปที่ Controller และตอบ Client เป็น JSON
+
+---
+
+### 12.3 โฟลเดอร์ Controllers
+
+```text
+Controllers/
+└── TodoController.cs
+```
+
+`Controllers` เป็นจุดรับ HTTP Request จากผู้ใช้งานหรือระบบภายนอก เช่น Swagger UI, Angular, Mobile Application หรือ API Client
+
+หน้าที่ของ `TodoController.cs`:
+
+- กำหนด URL ของ API ด้วย `[Route]`
+- กำหนด HTTP Method เช่น `[HttpGet]`, `[HttpPost]`, `[HttpPut]` และ `[HttpDelete]`
+- รับ Parameter, Query String และ Request Body
+- ตรวจสอบ Model Validation เบื้องต้น
+- เรียกใช้งาน Service ผ่าน Interface
+- ส่ง HTTP Status Code และ Response กลับไปยัง Client
+
+ตัวอย่าง:
+
+```csharp
+using Microsoft.AspNetCore.Mvc;
+using TodoListAPI.Service.Interface;
+
+namespace TodoListAPI.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class TodoController : ControllerBase
+{
+    private readonly ITodoService _todoService;
+
+    public TodoController(ITodoService todoService)
+    {
+        _todoService = todoService;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _todoService.GetAllAsync();
+        return Ok(result);
+    }
+}
+```
+
+หลักการสำคัญคือ Controller ควรมีขนาดเล็ก และไม่ควรเขียน SQL หรือ Business Logic ที่ซับซ้อนภายใน Controller โดยตรง
+
+---
+
+### 12.4 โฟลเดอร์ Entitie
+
+```text
+Entitie/
+└── todoList/
+    ├── Todo.cs
+    ├── TodoListContext.cs
+    └── todoListContext.txt
+```
+
+โฟลเดอร์นี้เก็บคลาสที่เกี่ยวข้องกับโครงสร้างฐานข้อมูล ซึ่งโดยทั่วไปถูกสร้างจาก EF Core Scaffold หรือเขียนขึ้นเพื่อ Mapping กับ Table
+
+#### Todo.cs
+
+เป็น Entity Model ที่ Mapping กับตาราง `Todos` ใน SQL Server โดย Property ภายในคลาสจะสัมพันธ์กับ Column ของตาราง
+
+```csharp
+public partial class Todo
+{
+    public int Id { get; set; }
+    public string Title { get; set; } = null!;
+    public string? Description { get; set; }
+    public bool IsCompleted { get; set; }
+    public DateTime CreatedAt { get; set; }
+}
+```
+
+#### TodoListContext.cs
+
+เป็น EF Core `DbContext` ทำหน้าที่เป็นตัวกลางระหว่างโปรแกรมกับฐานข้อมูล เช่น:
+
+- เปิดการเชื่อมต่อฐานข้อมูลตาม Configuration
+- Mapping Entity กับ Table
+- Query ข้อมูลผ่าน LINQ
+- ติดตามการเปลี่ยนแปลงของ Entity
+- บันทึกข้อมูลด้วย `SaveChangesAsync()`
+
+```csharp
+public partial class TodoListContext : DbContext
+{
+    public TodoListContext(DbContextOptions<TodoListContext> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<Todo> Todos { get; set; }
+}
+```
+
+#### todoListContext.txt
+
+จากภาพมีไฟล์ `todoListContext.txt` อยู่ร่วมกับ `TodoListContext.cs` ไฟล์ `.txt` ไม่ถูก Compile เป็น C# และอาจใช้เป็นไฟล์สำรอง ตัวอย่างคำสั่ง หรือบันทึกชั่วคราว
+
+หากไฟล์ดังกล่าวไม่ถูกใช้งาน ควรลบออกจาก Project หรือย้ายไปไว้ในโฟลเดอร์เอกสาร เพื่อป้องกันความสับสน โดยเฉพาะหากภายในมี Connection String หรือข้อมูลสำคัญ
+
+> ข้อเสนอแนะด้านการตั้งชื่อ: ควรเปลี่ยนชื่อโฟลเดอร์ `Entitie` เป็น `Entities` และเปลี่ยน `todoList` เป็น `TodoList` เพื่อให้ถูกต้องและเป็นไปตามมาตรฐาน PascalCase ของ .NET
+
+โครงสร้างที่แนะนำ:
+
+```text
+Entities/
+└── TodoList/
+    ├── Todo.cs
+    └── TodoListContext.cs
+```
+
+---
+
+### 12.5 โฟลเดอร์ Models
+
+```text
+Models/
+├── LineConfigSetting.cs
+├── LineSendMessageRequest.cs
+└── SaveRequest.cs
+```
+
+`Models` ในโครงสร้างนี้ใช้เก็บ Model ที่ไม่ได้ Mapping กับ Table โดยตรง เช่น Configuration Model, Request DTO และ Response DTO
+
+#### LineConfigSetting.cs
+
+ใช้รับค่าการตั้งค่าของ LINE API จาก `appsettings.json` เช่น Base URL, Channel Access Token หรือ Endpoint
+
+```csharp
+public class LineConfigSetting
+{
+    public string BaseUrl { get; set; } = string.Empty;
+    public string ChannelAccessToken { get; set; } = string.Empty;
+}
+```
+
+#### LineSendMessageRequest.cs
+
+ใช้เป็น Request Model สำหรับสร้างข้อมูลที่จะส่งไปยัง LINE API เช่น ผู้รับและข้อความ
+
+```csharp
+public class LineSendMessageRequest
+{
+    public string To { get; set; } = string.Empty;
+    public string Message { get; set; } = string.Empty;
+}
+```
+
+#### SaveRequest.cs
+
+ใช้รับข้อมูลจาก Client สำหรับสร้างหรือแก้ไข Todo การแยก Request Model ออกจาก Entity ช่วยป้องกันไม่ให้ Client แก้ไข Field ที่ไม่ควรแก้ไข
+
+```csharp
+public class SaveRequest
+{
+    public string Title { get; set; } = string.Empty;
+    public string? Description { get; set; }
+    public bool IsCompleted { get; set; }
+}
+```
+
+> หากโปรเจกต์มี Model จำนวนมาก แนะนำแยกเป็น `Models/Requests`, `Models/Responses` และ `Models/Configurations`
+
+---
+
+### 12.6 โฟลเดอร์ Repository
+
+```text
+Repository/
+├── Interface/
+│   └── ITodoRepo.cs
+└── TodoRepo.cs
+```
+
+Repository Layer รับผิดชอบการเข้าถึงข้อมูลโดยตรง และซ่อนรายละเอียดของ EF Core จาก Service Layer
+
+#### ITodoRepo.cs
+
+เป็น Interface ที่กำหนด Contract ว่า Repository สามารถทำอะไรได้บ้าง โดยไม่กำหนดรายละเอียดการทำงาน
+
+```csharp
+public interface ITodoRepo
+{
+    Task<List<Todo>> GetAllAsync();
+    Task<Todo?> GetByIdAsync(int id);
+    Task<Todo> AddAsync(Todo todo);
+    Task UpdateAsync(Todo todo);
+    Task DeleteAsync(Todo todo);
+}
+```
+
+#### TodoRepo.cs
+
+เป็น Implementation ของ `ITodoRepo` และใช้ `TodoListContext` ติดต่อฐานข้อมูลจริง
+
+```csharp
+public class TodoRepo : ITodoRepo
+{
+    private readonly TodoListContext _context;
+
+    public TodoRepo(TodoListContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<List<Todo>> GetAllAsync()
+    {
+        return await _context.Todos
+            .AsNoTracking()
+            .ToListAsync();
+    }
+}
+```
+
+ประโยชน์ของ Repository:
+
+- แยก Data Access Logic ออกจาก Business Logic
+- ลดการเขียน Query ซ้ำหลายจุด
+- เปลี่ยนหรือปรับวิธีเข้าถึงข้อมูลได้ง่ายขึ้น
+- Mock Interface เพื่อเขียน Unit Test ได้
+
+> ข้อเสนอแนะด้านการตั้งชื่อ: จากภาพแสดงชื่อ `Repositoy` ซึ่งควรแก้เป็น `Repository` และชื่อ `ITodoRepo` อาจเปลี่ยนเป็น `ITodoRepository` เพื่อให้ชื่อสื่อความหมายชัดเจน
+
+---
+
+### 12.7 โฟลเดอร์ Service
+
+```text
+Service/
+├── Interface/
+│   ├── ITodoLineService.cs
+│   └── ITodoService.cs
+├── ApiLine.cs
+├── TodoLineService.cs
+└── TodoService.cs
+```
+
+Service Layer เป็นส่วนประมวลผล Business Logic และประสานงานระหว่าง Controller, Repository และ External API
+
+#### ITodoService.cs
+
+กำหนด Contract ของงานเกี่ยวกับ Todo ที่ Controller สามารถเรียกใช้ได้
+
+```csharp
+public interface ITodoService
+{
+    Task<IEnumerable<Todo>> GetAllAsync();
+    Task<Todo?> GetByIdAsync(int id);
+    Task<Todo> CreateAsync(SaveRequest request);
+    Task<bool> UpdateAsync(int id, SaveRequest request);
+    Task<bool> DeleteAsync(int id);
+}
+```
+
+#### TodoService.cs
+
+เป็น Implementation ของ `ITodoService` ทำหน้าที่:
+
+- ตรวจสอบ Business Rule
+- แปลง `SaveRequest` เป็น Entity
+- เรียก Repository เพื่ออ่านหรือบันทึกข้อมูล
+- เรียก LINE Service เมื่อจำเป็น
+- จัดเตรียมผลลัพธ์ให้ Controller
+
+ตัวอย่าง Business Flow:
+
+```csharp
+public async Task<Todo> CreateAsync(SaveRequest request)
+{
+    var todo = new Todo
+    {
+        Title = request.Title.Trim(),
+        Description = request.Description,
+        IsCompleted = request.IsCompleted,
+        CreatedAt = DateTime.Now
+    };
+
+    var result = await _todoRepo.AddAsync(todo);
+    await _todoLineService.SendTodoCreatedMessageAsync(result);
+
+    return result;
+}
+```
+
+#### ITodoLineService.cs
+
+กำหนด Contract สำหรับงานส่งข้อความ Todo ไปยัง LINE โดยแยก Controller และ Todo Service ออกจากรายละเอียดของ LINE API
+
+```csharp
+public interface ITodoLineService
+{
+    Task SendTodoCreatedMessageAsync(Todo todo);
+}
+```
+
+#### TodoLineService.cs
+
+จัดเตรียมข้อความตาม Business Requirement แล้วเรียก Client ที่รับผิดชอบการสื่อสารกับ LINE API
+
+หน้าที่ตัวอย่าง:
+
+- กำหนดรูปแบบข้อความ
+- ตรวจสอบว่าควรส่งข้อความหรือไม่
+- สร้าง `LineSendMessageRequest`
+- เรียก `ApiLine`
+- จัดการผลลัพธ์หรือ Exception ในระดับ Service
+
+#### ApiLine.cs
+
+ทำหน้าที่เป็น HTTP Client Wrapper สำหรับสื่อสารกับ LINE API โดยตรง เช่น:
+
+- สร้าง `HttpRequestMessage`
+- กำหนด Authorization Header
+- Serialize Request เป็น JSON
+- เรียก `HttpClient.SendAsync()`
+- ตรวจสอบ HTTP Status Code
+- บันทึก Log เมื่อเรียก API ไม่สำเร็จ
+
+> เพื่อให้ชื่อชัดเจนขึ้น อาจเปลี่ยน `ApiLine.cs` เป็น `LineApiClient.cs` และสร้าง Interface ชื่อ `ILineApiClient.cs`
+
+---
+
+### 12.8 ไฟล์หลักระดับ Project
+
+โครงสร้างในภาพแสดงเฉพาะโฟลเดอร์หลักบางส่วน แต่โปรเจกต์ ASP.NET Core Web API ควรมีไฟล์ระดับ Root ต่อไปนี้ด้วย
+
+#### Program.cs
+
+เป็น Entry Point ของระบบ ใช้ลงทะเบียน Dependency Injection และกำหนด Middleware Pipeline
+
+ตัวอย่างการลงทะเบียน Layer ต่าง ๆ:
+
+```csharp
+using Microsoft.EntityFrameworkCore;
+using TodoListAPI.Entities.TodoList;
+using TodoListAPI.Repository;
+using TodoListAPI.Repository.Interface;
+using TodoListAPI.Service;
+using TodoListAPI.Service.Interface;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<TodoListContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ITodoRepo, TodoRepo>();
+builder.Services.AddScoped<ITodoService, TodoService>();
+builder.Services.AddScoped<ITodoLineService, TodoLineService>();
+
+builder.Services.AddHttpClient<ApiLine>();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
+app.Run();
+```
+
+#### appsettings.json
+
+ใช้เก็บ Configuration เช่น Connection String, Logging และ LINE API Settings
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=YOUR_SERVER;Database=TodoListDB;Trusted_Connection=True;TrustServerCertificate=True;"
+  },
+  "LineConfig": {
+    "BaseUrl": "https://api.example.com",
+    "ChannelAccessToken": "DO_NOT_STORE_REAL_TOKEN_HERE"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
+```
+
+ค่า Token จริงไม่ควรถูก Commit ลง Git ควรเก็บใน User Secrets, Environment Variables หรือ Secret Store
+
+#### Properties/launchSettings.json
+
+ใช้กำหนด URL, Port, Environment และหน้าเริ่มต้นเมื่อ Run จาก Visual Studio
+
+#### TodoListAPI.csproj
+
+ใช้กำหนด Target Framework และ NuGet Package References ของโปรเจกต์
+
+---
+
+### 12.9 ความเชื่อมโยงกับแนวคิด MVC
+
+| MVC | ส่วนในโปรเจกต์ | หน้าที่ |
+|---|---|---|
+| Model | `Entities` และ `Models` | แทนข้อมูลจากฐานข้อมูล, Request, Response และ Configuration |
+| View | ไม่มี View แบบ Razor | Web API ส่ง JSON และใช้ Swagger UI หรือ Frontend แสดงผล |
+| Controller | `Controllers/TodoController.cs` | รับ Request, เรียก Service และส่ง Response |
+| Business Layer | `Service` | ประมวลผลกฎทางธุรกิจและควบคุมลำดับการทำงาน |
+| Data Access Layer | `Repository` และ `TodoListContext` | Query และบันทึกข้อมูลใน SQL Server |
+| Integration Layer | `ApiLine` และ `TodoLineService` | เชื่อมต่อ LINE API หรือ External API |
+
+ดังนั้นโครงสร้างในภาพไม่ใช่ MVC แบบสามโฟลเดอร์เท่านั้น แต่เป็น **MVC + Service Layer + Repository Pattern + External API Client** ซึ่งเหมาะกับ Web API ที่มี Business Logic และการเชื่อมต่อระบบภายนอก
+
+---
+
+### 12.10 Dependency Injection และอายุการใช้งานของ Object
+
+การเชื่อมต่อแต่ละ Layer ควรทำผ่าน Dependency Injection แทนการใช้ `new` ภายใน Class
+
+```csharp
+builder.Services.AddScoped<ITodoRepo, TodoRepo>();
+builder.Services.AddScoped<ITodoService, TodoService>();
+builder.Services.AddScoped<ITodoLineService, TodoLineService>();
+```
+
+อายุการใช้งานที่ควรรู้:
+
+- `AddTransient` สร้าง Object ใหม่ทุกครั้งที่ถูกเรียก
+- `AddScoped` สร้างหนึ่ง Object ต่อหนึ่ง HTTP Request เหมาะกับ Service, Repository และ EF Core DbContext
+- `AddSingleton` สร้าง Object เดียวตลอดอายุ Application ไม่ควรใช้กับ DbContext
+
+Dependency ที่แนะนำ:
+
+```text
+TodoController
+    -> ITodoService
+        -> TodoService
+            -> ITodoRepo
+                -> TodoRepo
+                    -> TodoListContext
+            -> ITodoLineService
+                -> TodoLineService
+                    -> ApiLine / HttpClient
+```
+
+ไม่ควรสร้าง Dependency ย้อนกลับ เช่น Repository เรียก Controller หรือ Entity เรียก Service เพราะจะทำให้ Layer ผูกกันและทดสอบยาก
+
+---
+
+### 12.11 หลักปฏิบัติสำหรับโครงสร้างโปรเจกต์
+
+1. Controller รับผิดชอบเฉพาะ HTTP Request และ Response
+2. Business Logic อยู่ใน Service
+3. Database Query อยู่ใน Repository หรือ Data Access Layer
+4. Entity ใช้แทนโครงสร้างฐานข้อมูล
+5. Request และ Response ควรแยกจาก Entity
+6. External API ควรมี Client หรือ Integration Layer แยกต่างหาก
+7. ทุก Layer ควรอ้างอิงผ่าน Interface เมื่อจำเป็นต้อง Mock หรือสลับ Implementation
+8. ใช้ Async สำหรับ Database และ HTTP I/O
+9. ใช้ `ILogger<T>` เพื่อบันทึก Log แทน `Console.WriteLine`
+10. ไม่เก็บ Password, Token หรือ Connection String ที่มีข้อมูลลับไว้ใน Source Code
+
+---
 ## 13. ข้อผิดพลาดที่พบบ่อย
 
 ### 13.1 ไม่รู้จัก AddSwaggerGen
@@ -883,28 +1385,6 @@ await _context.SaveChangesAsync();
 ### 14.6 เปิด Swagger ใน Production อย่างระมัดระวัง
 
 ค่าเริ่มต้นในคู่มือนี้เปิดเฉพาะ Development หากจำเป็นต้องเปิดใน Production ควรมีมาตรการ Authentication, Authorization หรือจำกัด Network Access
-
----
-
-## 15. Checklist
-
-- [ ] ติดตั้ง Visual Studio และ ASP.NET and web development workload
-- [ ] ตรวจสอบ .NET SDK
-- [ ] สร้าง ASP.NET Core Web API ชื่อ `TodoListAPI`
-- [ ] เปิดใช้ Controllers และ HTTPS
-- [ ] ติดตั้ง EF Core SQL Server, Tools และ Design
-- [ ] ติดตั้ง Swashbuckle.AspNetCore
-- [ ] เพิ่ม Swagger Services และ Middleware
-- [ ] สร้างฐานข้อมูลและตาราง `Todos`
-- [ ] เพิ่ม `DefaultConnection`
-- [ ] รัน `Scaffold-DbContext`
-- [ ] ตรวจสอบ Entity และ DbContext
-- [ ] ลงทะเบียน DbContext ใน `Program.cs`
-- [ ] สร้าง `TodosController`
-- [ ] Build Solution โดยไม่มี Error
-- [ ] Run และเปิด `/swagger`
-- [ ] ทดสอบ CRUD ผ่าน Swagger UI
-- [ ] ย้ายข้อมูลลับไป User Secrets หรือ Secret Store
 
 ---
 
