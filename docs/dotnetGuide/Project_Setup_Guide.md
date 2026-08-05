@@ -367,7 +367,8 @@ Server=YOUR_SERVER;Database=TodoListDB;User Id=YOUR_USER;Password=YOUR_PASSWORD;
 คำสั่งแนะนำ:
 
 ```powershell
-Scaffold-DbContext "Server=YOUR_SERVER;Database=TodoListDB;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models\Entities -Context TodoListDbContext -ContextDir Models\Entities -NoOnConfiguring -Force
+Scaffold -DbContext -f "Server=xxx;Database=xxx;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entitie\todoList
+
 ```
 
 ความหมายของ Parameter:
@@ -387,7 +388,8 @@ Scaffold-DbContext "Server=YOUR_SERVER;Database=TodoListDB;Trusted_Connection=Tr
 ### 8.3 Scaffold เฉพาะบางตาราง
 
 ```powershell
-Scaffold-DbContext "Server=YOUR_SERVER;Database=TodoListDB;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models\Entities -Context TodoListDbContext -NoOnConfiguring -Tables Todos -Force
+Scaffold -DbContext -f "Server=xxx;Database=xxx;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entitie\todoList
+
 ```
 
 หลายตาราง:
