@@ -334,56 +334,66 @@ dotnet build
 เปิดไฟล์ `Program.cs` และใช้โค้ดต่อไปนี้:
 
 ```csharp
-using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ลงทะเบียน Controller
+// Add services to the Controllder.
 builder.Services.AddControllers();
 
-// ลงทะเบียน API Explorer
-builder.Services.AddEndpointsApiExplorer();
+/*-  Add Service Connection Database
+builder.Services.AddDbContext<TodoListContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);  -*/
 
-// ลงทะเบียน Swagger Generator
-builder.Services.AddSwaggerGen(options =>
+/*- Add Service interface   Injection
+builder.Services.AddScoped<ITodoService, TodoService>();
+builder.Services.AddScoped<ITodoLineService, TodoLineService>();
+
+//Repositories Injection
+builder.Services.AddScoped<ITodoRepo, TodoRepo>(); -*/
+
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo
+    options.AddPolicy("ProjectCors",
+        builder => builder
+         .SetIsOriginAllowedToAllowWildcardSubdomains()
+         .AllowAnyMethod()
+         .AllowAnyHeader()
+         .AllowCredentials()
+         .WithExposedHeaders("Content-Disposition")
+         );
+    options.AddPolicy("AllowAngular",
+    policy =>
     {
-        Title = "TodoListAPI",
-        Version = "v1",
-        Description = "REST API สำหรับจัดการรายการ Todo",
-        Contact = new OpenApiContact
-        {
-            Name = "TodoListAPI Support",
-            Email = "support@example.com"
-        }
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
 var app = builder.Build();
 
-// เปิด Swagger เฉพาะ Development Environment
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    // เปิด Endpoint สำหรับ Swagger JSON
     app.UseSwagger();
-
-    // เปิด Swagger UI
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint(
-            "/swagger/v1/swagger.json",
-            "TodoListAPI v1");
-
-        options.DocumentTitle = "TodoListAPI Documentation";
-    });
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
+
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
+
 ```
 
 ## คำอธิบายคำสั่ง Swagger
