@@ -29,14 +29,34 @@
       <div id="markdown-content">
         Loading...
       </div>
-    </main>
 
+      <button type="button" class="btn btn-primary position-fixed bottom-0 end-0 m-4 rounded-circle shadow" id="btn-back-to-top" style="display: none; z-index: 1080;">
+        <i class="bi bi-arrow-up"></i>
+      </button>
+      
+    </main>
   </div>
 
-  <button type="button" class="btn btn-primary position-fixed bottom-0 end-0 m-4 rounded-circle shadow" id="btn-back-to-top" style="display: none; z-index: 1080;">
-  <i class="bi bi-arrow-up"></i>
-  </button>
   
+
+  <script> 
+      let mybutton = document.getElementById("btn-back-to-top");
+
+      window.onscroll = function () {
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+          mybutton.style.display = "block";
+        } else {
+          mybutton.style.display = "none";
+        }
+      };
+      
+      mybutton.addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+  </script>
   <!-- Application Script -->
   <script src="./app.js"></script>
   <!-- <script src="./app.js"></script> -->
