@@ -624,7 +624,6 @@ public partial class TodoListContext : DbContext
 
 หากไฟล์ดังกล่าวไม่ถูกใช้งาน ควรลบออกจาก Project หรือย้ายไปไว้ในโฟลเดอร์เอกสาร เพื่อป้องกันความสับสน โดยเฉพาะหากภายในมี Connection String หรือข้อมูลสำคัญ
 
-> ข้อเสนอแนะด้านการตั้งชื่อ: ควรเปลี่ยนชื่อโฟลเดอร์ `Entitie` เป็น `Entities` และเปลี่ยน `todoList` เป็น `TodoList` เพื่อให้ถูกต้องและเป็นไปตามมาตรฐาน PascalCase ของ .NET
 
 โครงสร้างที่แนะนำ:
 
@@ -745,8 +744,6 @@ public class TodoRepo : ITodoRepo
 - เปลี่ยนหรือปรับวิธีเข้าถึงข้อมูลได้ง่ายขึ้น
 - Mock Interface เพื่อเขียน Unit Test ได้
 
-> ข้อเสนอแนะด้านการตั้งชื่อ: จากภาพแสดงชื่อ `Repositoy` ซึ่งควรแก้เป็น `Repository` และชื่อ `ITodoRepo` อาจเปลี่ยนเป็น `ITodoRepository` เพื่อให้ชื่อสื่อความหมายชัดเจน
-
 ---
 
 ### 9.7 โฟลเดอร์ Service
@@ -842,7 +839,6 @@ public interface ITodoLineService
 - ตรวจสอบ HTTP Status Code
 - บันทึก Log เมื่อเรียก API ไม่สำเร็จ
 
-> เพื่อให้ชื่อชัดเจนขึ้น อาจเปลี่ยน `ApiLine.cs` เป็น `LineApiClient.cs` และสร้าง Interface ชื่อ `ILineApiClient.cs`
 
 ---
 
